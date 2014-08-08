@@ -9,13 +9,14 @@
 <body>
 
 <% if signed_in? %>
-  <%= current_user.username %>
-  <%= button_to "Sign Out", session_url, method: :delete %>
+  Welcome <%= current_user.username %> | ★ <%= current_user.cheers %> |
+  (Not <%= current_user.username %>? <%= link_to "Sign Out", session_url, method: :delete %>)
 <% else %>
   <%= link_to "Sign In", new_session_url %>
   <%= link_to "Sign Up", new_user_url %>
 <% end %>
 
+<hr>
 <ul>
 <% if flash[:errors] %>
   <% flash[:errors].each do |error| %>
@@ -25,6 +26,13 @@
 </ul>
 
 <%= yield %>
+
+<hr>
+<a href="<%= users_url %>">Home</a>
+<br>
+<% if signed_in? %>
+  <a href="<%= user_url(current_user) %>">My Profile</a>
+<% end %>
 
 </body>
 </html>

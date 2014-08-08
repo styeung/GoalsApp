@@ -104,3 +104,10 @@ def sign_out
   click_button 'Sign Out'
 end
 
+def make_goal(body)
+  visit new_goal_url
+  fill_in "Goal", with: body
+  choose('Public')
+  click_button 'Create Goal'
+end
+

@@ -29,6 +29,16 @@ class GoalsController < ApplicationController
     end
   end
 
+  def cheer
+    @goal = Goal.find(params[:goal_id])
+    @goal.cheers += 1
+    user = User.find(current_user.id)
+    user.cheers -= 1
+    @goal.save
+    user.save
+    redirect_to :back
+  end
+
   def destroy
     @goal = Goal.find(params[:id])
     @goal.destroy

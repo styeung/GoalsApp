@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 6, allow_nil: true}
 
   after_initialize :ensure_session_token
+  after_initialize :add_cheers
 
   attr_reader :password
 
@@ -13,6 +14,16 @@ class User < ActiveRecord::Base
     primary_key: :id,
     inverse_of: :user
   )
+
+  has_many(
+    :authored_comments,
+    class_name: "Comment",
+    foreign_key: :user_id,
+    primary_key: :id,
+    inverse_of: :author
+  )
+
+  include Commentable
 
   def self.find_by_credentials(username, password)
     @user = User.find_by_username(username)
@@ -42,6 +53,11 @@ class User < ActiveRecord::Base
 
   def ensure_session_token
     self.session_token ||= generate_session_token
+  end
+
+  def add_cheers(num = 10)
+    self.cheers = num
+    self.save
   end
 
 end

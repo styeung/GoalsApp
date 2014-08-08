@@ -9,4 +9,6 @@ class Goal < ActiveRecord::Base
     inverse_of: :goals
   )
 
+  include Commentable
+
 end
