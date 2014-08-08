@@ -12,6 +12,13 @@ feature "goal creation process" do
     expect(page).to have_content('Sign In')
   end
 
+  it "requires you to be the page owner to create goals" do
+    sign_out
+    visit users_url
+    click_link("Sai To")
+    expect(page).to_not have_content("New Goal")
+  end
+
   it "has a goal creation page" do
     visit new_goal_url
     expect(page).to have_content('Goal')
@@ -31,8 +38,8 @@ feature "goal creation process" do
     choose('Private')
     click_button 'Create Goal'
     sign_out
-
-    visit user_url("1")
+    visit users_url
+    click_link('Sai To')
     expect(page).to_not have_content('eat less')
   end
 
@@ -52,9 +59,10 @@ feature "goal creation process" do
     click_button 'Create Goal'
     click_button 'Edit Goal'
     fill_in "Goal", with: 'eat less2'
-    click_button 'Create Goal'
+    click_button 'Update Goal'
 
     expect(page).to have_content('eat less2')
   end
+
 
 end

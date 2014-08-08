@@ -1,2 +1,13 @@
-<h1><%= current_user.username %></h1>
+<h1><%= @user.username %>'s Goals</h1>
 
+<% @user.goals.each do |goal| %>
+  <%= goal.body if goal.setting == "Public" || is_page_owner?(@user) %>
+  <% if is_page_owner?(@user) %>
+    <%= button_to "Edit Goal", edit_goal_url(goal), method: :get %>
+    <%= button_to "Delete Goal", goal_url(goal), method: :delete %>
+  <% end %>
+<% end  %>
+
+<% if is_page_owner?(@user) %>
+  <a href="<%= new_goal_url %>"> New Goal</a>
+<% end %>
