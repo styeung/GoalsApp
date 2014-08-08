@@ -20,7 +20,7 @@ feature "logging in" do
 
   it "shows the username on the homepage after login" do
     sign_up("Sai To")
-    click_on 'Logout'
+    sign_out
     sign_in("Sai To")
     expect(page).to have_content "Sai To"
   end
@@ -29,12 +29,12 @@ end
 feature "logging out" do
   it "begins with logged out state" do
     visit new_session_url
-    expect(page).to have_content "Login"
+    expect(page).to have_content "Sign In"
   end
 
   it "doesn't show username on the homepage after logout" do
     sign_up("Sai To")
-    click_on 'Logout'
+    sign_out
     expect(page).to_not have_content "Sai To"
   end
 
