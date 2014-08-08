@@ -14,8 +14,12 @@
 # users commonly want.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+
+
+require 'capybara/rspec'
+
 RSpec.configure do |config|
-  require 'capybara/rspec'
+
 
 
 
@@ -81,3 +85,18 @@ RSpec.configure do |config|
   end
 =end
 end
+
+def sign_up(username)
+  visit "/users/new"
+  fill_in "Username", with: username
+  fill_in "Password", with: 'password'
+  click_button 'Sign Up'
+end
+
+def sign_in(username)
+  visit "/session/new"
+  fill_in "Username", with: username
+  fill_in "Password", with: 'password'
+  click_button 'Sign In'
+end
+
